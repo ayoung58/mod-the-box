@@ -12,18 +12,22 @@ public class Cube : MonoBehaviour
     };
     public Directions direction = Directions.xAxis;
     public float changeInterval = 3.0f;
+    public float rColor = 0.5f;
+    public float gColor = 1.0f;
+    public float bColor = 0.3f;
+    public float aColor = 0.4f;
+    private Material material;
     public MeshRenderer Renderer;
     
     void Start()
     {
         transform.position = new Vector3(3, 4, 1);
         transform.localScale = Vector3.one * 1.3f;
-        
-        Material material = Renderer.material;
-        
-        material.color = new Color(0.5f, 1.0f, 0.3f, 0.4f);
+
+        material = Renderer.material;
 
         InvokeRepeating("changeDirection", 2.0f, changeInterval);
+        InvokeRepeating("changeColor", 2.0f, changeInterval);
     }
     
     void Update()
@@ -41,6 +45,10 @@ public class Cube : MonoBehaviour
         } else if (directionCode == 2) {
             direction = Directions.zAxis;
         }
+    }
+
+    void changeColor() {
+        material.color = new Color(rColor, gColor, bColor, aColor);
     }
 
     void rotation() {
