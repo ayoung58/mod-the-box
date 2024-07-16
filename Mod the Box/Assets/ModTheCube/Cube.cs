@@ -12,6 +12,8 @@ public class Cube : MonoBehaviour
     };
     public Directions direction = Directions.xAxis;
     public float changeInterval = 3.0f;
+    public float rotationSpeedLower = 5.0f;
+    public float rotationSpeedUpper = 15.0f;
     public float rColor = 0.5f;
     public float gColor = 1.0f;
     public float bColor = 0.3f;
@@ -26,8 +28,9 @@ public class Cube : MonoBehaviour
 
         material = Renderer.material;
 
-        InvokeRepeating("changeDirection", 2.0f, changeInterval);
+        InvokeRepeating("changeDirectionAndSpeed", 2.0f, changeInterval);
         InvokeRepeating("changeColor", 2.0f, changeInterval);
+
     }
     
     void Update()
@@ -36,7 +39,8 @@ public class Cube : MonoBehaviour
         rotation();
     }
 
-    void changeDirection() {
+    void changeDirectionAndSpeed() {
+        rotationSpeed = Random.Range(rotationSpeedLower, rotationSpeedUpper);
         int directionCode = Random.Range(0, 3);
         if (directionCode == 0) {
             direction = Directions.xAxis;
