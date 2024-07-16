@@ -29,10 +29,11 @@ public class Cube : MonoBehaviour
     public float movementSpeed = 2.0f;
     public float movementSpeedLower = 1.0f;
     public float movementSpeedUpper = 3.0f;
+    public int movementDirection = 1;
 
-    public float xLimit = 3.0f;
-    public float yLimit = 3.0f;
-    public float zLimit = 3.0f;
+    public float xLimit = 10.0f;
+    public float yLimit = 10.0f;
+    public float zLimit = 10.0f;
     
     
     void Start()
@@ -57,27 +58,39 @@ public class Cube : MonoBehaviour
 
     void moving() {
         if (cubeMove == CubeMove.xAxis) {
-            if (transform.position.x >= xLimit) {
+            if (transform.position.x > xLimit) {
                 transform.position = new Vector3(xLimit, transform.position.y, transform.position.z);
+            } else if (transform.position.x < -xLimit) {
+                transform.position = new Vector3(-xLimit, transform.position.y, transform.position.z);
             } else {
-                transform.Translate(movementSpeed * Time.deltaTime, 0.0f, 0.0f);
+                transform.Translate(Vector3.right * movementSpeed * Time.deltaTime * movementDirection, Space.World);
             }
         } else if (cubeMove == CubeMove.yAxis) {
-            if (transform.position.y >= yLimit) {
+            if (transform.position.y > yLimit) {
                 transform.position = new Vector3(transform.position.x, yLimit, transform.position.z);
+            } else if (transform.position.y < -yLimit) {
+                transform.position = new Vector3(transform.position.x, -yLimit, transform.position.z);
             } else {
-                transform.Translate(0.0f, movementSpeed * Time.deltaTime, 0.0f);
+                transform.Translate(Vector3.up * movementSpeed * Time.deltaTime * movementDirection, Space.World);
             }
         } else if (cubeMove == CubeMove.zAxis) {
-            if (transform.position.z >= zLimit) {
+            if (transform.position.z > zLimit) {
                 transform.position = new Vector3(transform.position.x,transform.position.y, zLimit);
+            } else if (transform.position.z < -zLimit) {
+                transform.position = new Vector3(transform.position.x,transform.position.y, -zLimit);
             } else {
-                transform.Translate(0.0f, 0.0f, movementSpeed * Time.deltaTime);
+                transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime * movementDirection, Space.World);
             }
         }
     }
 
     void changeMovement() {
+        int choose = Random.Range(0, 2);
+        if (choose == 0) {
+            movementDirection = 1;
+        } else {
+            movementDirection = -1;
+        }
         movementSpeed = Random.Range(rotationSpeedLower, rotationSpeedUpper);
         int movementCode = Random.Range(0, 3);
         if (movementCode == 0) {
