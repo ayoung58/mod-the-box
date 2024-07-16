@@ -34,6 +34,14 @@ public class Cube : MonoBehaviour
     public float xLimit = 10.0f;
     public float yLimit = 10.0f;
     public float zLimit = 10.0f;
+
+    public float xScaleSpeed = 1.0f;
+    public float yScaleSpeed = 1.0f;
+    public float zScaleSpeed = 1.0f;
+    public float scaleSpeedUpper = 3.0f;
+    public float scaleSpeedLower = 0.0f;
+    
+    private int scaleDirection = 1;
     
     
     void Start()
@@ -46,7 +54,7 @@ public class Cube : MonoBehaviour
         InvokeRepeating("changeDirectionAndSpeed", 2.0f, changeInterval);
         InvokeRepeating("changeColor", 2.0f, changeInterval);
         InvokeRepeating("changeMovement", 2.0f, changeInterval);
-
+        InvokeRepeating("changeScaleType", 2.0f, changeInterval);
     }
     
     void Update()
@@ -54,6 +62,18 @@ public class Cube : MonoBehaviour
         // resetDirections();
         rotation();
         moving();
+        scaleCube();
+    }
+
+    void changeScaleType() {
+        scaleDirection *= -1;
+        xScaleSpeed = Random.Range(scaleSpeedLower, scaleSpeedUpper);
+        yScaleSpeed = Random.Range(scaleSpeedLower, scaleSpeedUpper);
+        zScaleSpeed = Random.Range(scaleSpeedLower, scaleSpeedUpper);
+    }
+
+    void scaleCube() {
+        transform.localScale += new Vector3(xScaleSpeed * Time.deltaTime * scaleDirection, yScaleSpeed * Time.deltaTime * scaleDirection, zScaleSpeed * Time.deltaTime * scaleDirection);
     }
 
     void moving() {
