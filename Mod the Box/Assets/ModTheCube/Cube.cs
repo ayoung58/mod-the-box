@@ -26,9 +26,13 @@ public class Cube : MonoBehaviour
         zAxis
     };
     public CubeMove cubeMove = CubeMove.xAxis;
-    public float movementSpeed = 10.0f;
-    public float movementSpeedLower = 5.0f;
-    public float movementSpeedUpper = 15.0f;
+    public float movementSpeed = 2.0f;
+    public float movementSpeedLower = 1.0f;
+    public float movementSpeedUpper = 3.0f;
+
+    public float xLimit = 3.0f;
+    public float yLimit = 3.0f;
+    public float zLimit = 3.0f;
     
     
     void Start()
@@ -53,11 +57,23 @@ public class Cube : MonoBehaviour
 
     void moving() {
         if (cubeMove == CubeMove.xAxis) {
-            transform.Translate(movementSpeed * Time.deltaTime, 0.0f, 0.0f);
+            if (transform.position.x >= xLimit) {
+                transform.position = new Vector3(xLimit, transform.position.y, transform.position.z);
+            } else {
+                transform.Translate(movementSpeed * Time.deltaTime, 0.0f, 0.0f);
+            }
         } else if (cubeMove == CubeMove.yAxis) {
-            transform.Translate(0.0f, movementSpeed * Time.deltaTime, 0.0f);
+            if (transform.position.y >= yLimit) {
+                transform.position = new Vector3(transform.position.x, yLimit, transform.position.z);
+            } else {
+                transform.Translate(0.0f, movementSpeed * Time.deltaTime, 0.0f);
+            }
         } else if (cubeMove == CubeMove.zAxis) {
-            transform.Translate(0.0f, 0.0f, movementSpeed * Time.deltaTime);
+            if (transform.position.z >= zLimit) {
+                transform.position = new Vector3(transform.position.x,transform.position.y, zLimit);
+            } else {
+                transform.Translate(0.0f, 0.0f, movementSpeed * Time.deltaTime);
+            }
         }
     }
 
