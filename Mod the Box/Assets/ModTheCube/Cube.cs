@@ -48,6 +48,10 @@ public class Cube : MonoBehaviour
     }
 
     void changeColor() {
+        rColor = Random.Range(0.0f, 1.0f);
+        bColor = Random.Range(0.0f, 1.0f);
+        gColor = Random.Range(0.0f, 1.0f);
+        aColor = Random.Range(0.0f, 1.0f);
         material.color = new Color(rColor, gColor, bColor, aColor);
     }
 
