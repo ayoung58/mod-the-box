@@ -20,6 +20,16 @@ public class Cube : MonoBehaviour
     public float aColor = 0.4f;
     private Material material;
     public MeshRenderer Renderer;
+    public enum CubeMove {
+        xAxis,
+        yAxis,
+        zAxis
+    };
+    public CubeMove cubeMove = CubeMove.xAxis;
+    public float movementSpeed = 10.0f;
+    public float movementSpeedLower = 5.0f;
+    public float movementSpeedUpper = 15.0f;
+    
     
     void Start()
     {
@@ -30,6 +40,7 @@ public class Cube : MonoBehaviour
 
         InvokeRepeating("changeDirectionAndSpeed", 2.0f, changeInterval);
         InvokeRepeating("changeColor", 2.0f, changeInterval);
+        InvokeRepeating("changeMovement", 2.0f, changeInterval);
 
     }
     
@@ -37,6 +48,29 @@ public class Cube : MonoBehaviour
     {   
         // resetDirections();
         rotation();
+        moving();
+    }
+
+    void moving() {
+        if (cubeMove == CubeMove.xAxis) {
+            transform.Translate(movementSpeed * Time.deltaTime, 0.0f, 0.0f);
+        } else if (cubeMove == CubeMove.yAxis) {
+            transform.Translate(0.0f, movementSpeed * Time.deltaTime, 0.0f);
+        } else if (cubeMove == CubeMove.zAxis) {
+            transform.Translate(0.0f, 0.0f, movementSpeed * Time.deltaTime);
+        }
+    }
+
+    void changeMovement() {
+        movementSpeed = Random.Range(rotationSpeedLower, rotationSpeedUpper);
+        int movementCode = Random.Range(0, 3);
+        if (movementCode == 0) {
+            cubeMove = CubeMove.xAxis;
+        } else if (movementCode == 1) {
+            cubeMove = CubeMove.yAxis;
+        } else if (movementCode == 2) {
+            cubeMove = CubeMove.zAxis;
+        }
     }
 
     void changeDirectionAndSpeed() {
