@@ -58,29 +58,20 @@ public class Cube : MonoBehaviour
 
     void moving() {
         if (cubeMove == CubeMove.xAxis) {
-            if (transform.position.x > xLimit) {
-                transform.position = new Vector3(xLimit, transform.position.y, transform.position.z);
-            } else if (transform.position.x < -xLimit) {
-                transform.position = new Vector3(-xLimit, transform.position.y, transform.position.z);
-            } else {
-                transform.Translate(Vector3.right * movementSpeed * Time.deltaTime * movementDirection, Space.World);
-            }
+            if (transform.position.x >= xLimit || transform.position.x <= -xLimit) {
+                movementDirection *= -1;
+            } 
+            transform.Translate(Vector3.right * movementSpeed * Time.deltaTime * movementDirection, Space.World);
         } else if (cubeMove == CubeMove.yAxis) {
-            if (transform.position.y > yLimit) {
-                transform.position = new Vector3(transform.position.x, yLimit, transform.position.z);
-            } else if (transform.position.y < -yLimit) {
-                transform.position = new Vector3(transform.position.x, -yLimit, transform.position.z);
-            } else {
-                transform.Translate(Vector3.up * movementSpeed * Time.deltaTime * movementDirection, Space.World);
-            }
+            if (transform.position.y >= yLimit || transform.position.y <= -yLimit) {
+                movementDirection *= -1;
+            } 
+            transform.Translate(Vector3.up * movementSpeed * Time.deltaTime * movementDirection, Space.World);
         } else if (cubeMove == CubeMove.zAxis) {
-            if (transform.position.z > zLimit) {
-                transform.position = new Vector3(transform.position.x,transform.position.y, zLimit);
-            } else if (transform.position.z < -zLimit) {
-                transform.position = new Vector3(transform.position.x,transform.position.y, -zLimit);
-            } else {
-                transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime * movementDirection, Space.World);
+            if (transform.position.z >= zLimit || transform.position.z <= -zLimit) {
+                movementDirection *= -1;
             }
+            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime * movementDirection, Space.World);
         }
     }
 
