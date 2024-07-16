@@ -5,7 +5,9 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
     public float rotationSpeed = 10.0f;
-    public int rotationDirection = 0;
+    public bool xDirection = true;
+    public bool yDirection = false;
+    public bool zDirection = false;
     public MeshRenderer Renderer;
     
     void Start()
@@ -19,16 +21,30 @@ public class Cube : MonoBehaviour
     }
     
     void Update()
-    {
+    {   
+        resetDirections();
         rotation();
     }
 
+    void resetDirections() {
+        if (xDirection) {
+            yDirection = false;
+            zDirection = false;
+        } else if (yDirection) {
+            xDirection = false;
+            zDirection = false;
+        } else if (zDirection) {
+            xDirection = false;
+            yDirection = false;
+        }
+    }
+
     void rotation() {
-        if (rotationDirection == 0) {
+        if (xDirection) {
             transform.Rotate(rotationSpeed * Time.deltaTime, 0.0f, 0.0f);
-        } else if (rotationDirection == 1) {
+        } else if (yDirection) {
             transform.Rotate(0.0f, rotationSpeed * Time.deltaTime, 0.0f);
-        } else if (rotationDirection == 2) {
+        } else if (zDirection) {
             transform.Rotate(0.0f, 0.0f, rotationSpeed * Time.deltaTime);
         }
     }
